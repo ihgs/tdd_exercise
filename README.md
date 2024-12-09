@@ -1,0 +1,1 @@
+参考　https://codesandbox.io/examples/package/jasmine-browser-runner
