@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/tdd_exercise/static/css/main.10b74085.css",
-    "main.js": "/tdd_exercise/static/js/main.092b1577.js",
+    "main.js": "/tdd_exercise/static/js/main.7a4abbbd.js",
     "static/js/188.ed4021f4.chunk.js": "/tdd_exercise/static/js/188.ed4021f4.chunk.js",
     "static/js/153.a0adf1d0.chunk.js": "/tdd_exercise/static/js/153.a0adf1d0.chunk.js",
     "static/js/211.6580b767.chunk.js": "/tdd_exercise/static/js/211.6580b767.chunk.js",
@@ -9,12 +9,12 @@
     "static/media/codicon.ttf": "/tdd_exercise/static/media/codicon.f6283f7ccaed1249d9eb.ttf",
     "index.html": "/tdd_exercise/index.html",
     "main.10b74085.css.map": "/tdd_exercise/static/css/main.10b74085.css.map",
-    "main.092b1577.js.map": "/tdd_exercise/static/js/main.092b1577.js.map",
+    "main.7a4abbbd.js.map": "/tdd_exercise/static/js/main.7a4abbbd.js.map",
     "188.ed4021f4.chunk.js.map": "/tdd_exercise/static/js/188.ed4021f4.chunk.js.map",
     "211.6580b767.chunk.js.map": "/tdd_exercise/static/js/211.6580b767.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.10b74085.css",
-    "static/js/main.092b1577.js"
+    "static/js/main.7a4abbbd.js"
   ]
 }
