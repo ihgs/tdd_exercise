@@ -1,24 +1,20 @@
 {
   "files": {
-    "main.css": "/tdd_exercise/static/css/main.516ec8cd.css",
-    "main.js": "/tdd_exercise/static/js/main.081b789e.js",
-    "static/js/188.ac6f1e43.chunk.js": "/tdd_exercise/static/js/188.ac6f1e43.chunk.js",
-    "static/js/568.8dab5646.chunk.js": "/tdd_exercise/static/js/568.8dab5646.chunk.js",
-    "static/js/643.1ffa1fb2.chunk.js": "/tdd_exercise/static/js/643.1ffa1fb2.chunk.js",
+    "main.css": "/tdd_exercise/static/css/main.10b74085.css",
+    "main.js": "/tdd_exercise/static/js/main.b75cb748.js",
+    "static/js/188.ed4021f4.chunk.js": "/tdd_exercise/static/js/188.ed4021f4.chunk.js",
     "static/js/153.a0adf1d0.chunk.js": "/tdd_exercise/static/js/153.a0adf1d0.chunk.js",
-    "static/js/210.de3ce11f.chunk.js": "/tdd_exercise/static/js/210.de3ce11f.chunk.js",
-    "static/js/31.1f13d455.chunk.js": "/tdd_exercise/static/js/31.1f13d455.chunk.js",
+    "static/js/211.6580b767.chunk.js": "/tdd_exercise/static/js/211.6580b767.chunk.js",
+    "editor.worker.js": "/tdd_exercise/editor.worker.js",
+    "static/media/codicon.ttf": "/tdd_exercise/static/media/codicon.f6283f7ccaed1249d9eb.ttf",
     "index.html": "/tdd_exercise/index.html",
-    "main.516ec8cd.css.map": "/tdd_exercise/static/css/main.516ec8cd.css.map",
-    "main.081b789e.js.map": "/tdd_exercise/static/js/main.081b789e.js.map",
-    "188.ac6f1e43.chunk.js.map": "/tdd_exercise/static/js/188.ac6f1e43.chunk.js.map",
-    "568.8dab5646.chunk.js.map": "/tdd_exercise/static/js/568.8dab5646.chunk.js.map",
-    "643.1ffa1fb2.chunk.js.map": "/tdd_exercise/static/js/643.1ffa1fb2.chunk.js.map",
-    "210.de3ce11f.chunk.js.map": "/tdd_exercise/static/js/210.de3ce11f.chunk.js.map",
-    "31.1f13d455.chunk.js.map": "/tdd_exercise/static/js/31.1f13d455.chunk.js.map"
+    "main.10b74085.css.map": "/tdd_exercise/static/css/main.10b74085.css.map",
+    "main.b75cb748.js.map": "/tdd_exercise/static/js/main.b75cb748.js.map",
+    "188.ed4021f4.chunk.js.map": "/tdd_exercise/static/js/188.ed4021f4.chunk.js.map",
+    "211.6580b767.chunk.js.map": "/tdd_exercise/static/js/211.6580b767.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.516ec8cd.css",
-    "static/js/main.081b789e.js"
+    "static/css/main.10b74085.css",
+    "static/js/main.b75cb748.js"
   ]
 }
