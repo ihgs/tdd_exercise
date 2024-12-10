@@ -96,7 +96,7 @@ export function Editor() {
                         <MonacoEditor
                             width="800"
                             height={size[1]}
-                            language="python"
+                            language="javascript"
                             theme="vs-dark"
                             value={testCode}
                             options={options}
