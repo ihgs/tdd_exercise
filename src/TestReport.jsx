@@ -58,15 +58,19 @@ function SuiteBox({ suite, indent }) {
 }
 
 export function TestReport({data}) {
-
-
+    
     return (
         <>
-        {data &&
+        {data?.error &&
+            <div style={{color:"red"}}>
+                {data.error.message}
+            </div>
+        }
+        {data?.result &&
             <List sx={{ width: '100%', bgcolor: 'background.paper' }} >
 
-                {Object.keys(data).map((key) => {
-                    const result = data[key]
+                {Object.keys(data.result).map((key) => {
+                    const result = data.result[key]
                     return <SuiteBox suite={result} indent={1} />
                 })}
             </List>

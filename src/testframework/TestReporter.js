@@ -52,8 +52,11 @@ export class TestReporter {
             console.log('Global ' + expectation.message);
             console.log(expectation.stack);
         }
-        console.log(this.results)
-        this.report(this.results)
+        this.report({result: this.results})
+    }
+
+    setError(error){
+        this.report({error: error})
     }
 
 }

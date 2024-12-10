@@ -1,9 +1,11 @@
 import MonacoEditor from "react-monaco-editor"
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import { runJasmine } from "./testframework/TestManager";
 import { TestReport } from "./TestReport";
 import { Button, Stack } from "@mui/material";
 import { useTest } from "./useTest";
+import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
+import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 
 const defaultCode = `
 function fizzbuzz(num) {
@@ -26,64 +28,101 @@ describe("FizzBuzz", function(){
     })
 })
 `
+
 export function Editor() {
     const [code, setCode] = useState(defaultCode);
     const [testCode, setTestCode] = useState(defaultTest);
-    const {data, report}  = useTest();
+    const [editorStatus, setEditorStatus] = useState("half")
+    const [size, setSize] = useState([0, 0]);
+    const { data, report } = useTest();
 
     const options = {
         automaticLayout: true,
+        inlineSuggest: { enabled: true }
     };
-    const editorDidMount = (editor, monaco) => {
-        console.log('editorDidMount', editor);
-        // editor.focus();
-    }
 
-    const editorWillMount = (editor, monaco) => {
-        console.log('editorDidMount', editor);
+    useLayoutEffect(() => {
+        const updateSize = () => {
+            switch (editorStatus) {
+                case "half":
+                    setSize([(window.innerHeight - 40) / 2, (window.innerHeight - 40) / 2])
+                    break;
+                case "fullCode":
+                    setSize([(window.innerHeight - 80), 20])
+                    break;
+                case "hiddenCode":
+                    setSize([20, (window.innerHeight - 80)])
+                    break;
+            }
 
-    }
+        }
+        window.addEventListener('resize', updateSize)
+        updateSize()
+
+        return () => window.removeEventListener('resize', updateSize)
+    }, [editorStatus])
 
 
     const runTest = async () => {
-        console.log("runTest")
+        // console.log("runTest")
         runJasmine(code + '\n' + testCode, report)
     }
 
     return (
         <>
             <Stack direction="row" style={{ textAlign: "left" }}>
-                <Stack spacing={2}>
-                <MonacoEditor
-                    width="800"
-                    height="300"
-                    language="javascript"
-                    theme="vs-dark"
-                    value={code}
-                    options={options}
-                    onChange={setCode}
-                    editorDidMount={editorDidMount}
-                    editorWillMount={editorWillMount}
-                />
-                <MonacoEditor
-                    width="800"
-                    height="300"
-                    language="javascript"
-                    theme="vs-dark"
-                    value={testCode}
-                    options={options}
-                    onChange={setTestCode}
-                    editorDidMount={editorDidMount}
-                    editorWillMount={editorWillMount}
-                />
-                </Stack>
-                <Stack>
-                    <Button onClick={runTest} sx={{marginLeft: 3}} variant="contained" >Test</Button>
+                <Stack spacing={1}>
+                    <Stack  direction={'row'} alignContent={'bottom'} alignItems={'bottom'} justifyItems={'bottom'}>
+                        <MonacoEditor
+                            width="800"
+                            height={size[0]}
+                            language="javascript"
+                            theme="vs-dark"
+                            value={code}
+                            options={options}
+                            onChange={setCode}
+                        />
+                        <div  style={{alignContent:"flex-end"}}>
+                        {editorStatus == "half" &&
+                            <ExpandLessRoundedIcon fontSize={'large'} onClick={() => { setEditorStatus("hiddenCode") }}></ExpandLessRoundedIcon>
+                        }
+                        {editorStatus == "hiddenCode" &&
+                            <ExpandMoreRoundedIcon fontSize={'large'} onClick={() => { setEditorStatus("half") }}>half</ExpandMoreRoundedIcon>
+                        }
 
-                <TestReport data={data} report={report}/>
+                        </div>
+                    </Stack>
+                    <Stack direction={'row'} >
+                        <MonacoEditor
+                            width="800"
+                            height={size[1]}
+                            language="python"
+                            theme="vs-dark"
+                            value={testCode}
+                            options={options}
+                            onChange={setTestCode}
+                        />
+                        <div >
+                        {editorStatus == "fullCode" &&
+                            <ExpandLessRoundedIcon fontSize={'large'} onClick={() => { setEditorStatus("half") }}>half</ExpandLessRoundedIcon>
+                        }
+                        {editorStatus == "half" &&
+                            <ExpandMoreRoundedIcon fontSize={'large'} onClick={() => { setEditorStatus("fullCode") }}>Full</ExpandMoreRoundedIcon>
+                        }
+
+                        </div>
+                    </Stack>
+                </Stack>
+                <Stack sx={{ marginLeft: 2}}>
+                    <div>
+                        <Button onClick={runTest} variant="contained" >Run & Test</Button>
+
+                    </div>
+
+                    <TestReport data={data} report={report} />
                 </Stack>
             </Stack>
-            
+
         </>
 
     )

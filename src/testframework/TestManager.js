@@ -11,12 +11,21 @@ export async function runJasmine(data, report) {
     window.describe = jasmineEnv.describe
     window.it = jasmineEnv.it
     window.expect = jasmineEnv.expect
+    window.afterAll = jasmineEnv.afterAll
+    window.afterEach = jasmineEnv.afterEach
+    window.beforeAll = jasmineEnv.beforeAll
+    window.beforeEach = jasmineEnv.beforeEach
+    window.expectAsync = jasmineEnv.expectAsync
+    
 
     const reporter = new TestReporter(report);
     jasmineEnv.updateInterval = 250;
     // jasmineEnv.randomizeTests(false);
     jasmineEnv.addReporter(reporter);
-    eval(data)
-    const result = await jasmineEnv.execute();
-    // console.log(result)
+    try{
+        eval(data)
+        const result = await jasmineEnv.execute();
+    }catch(e){
+        reporter.setError(e)
+    }
 }
