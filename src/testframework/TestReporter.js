@@ -1,5 +1,28 @@
 export class SpecResult {
+    constructor() {
+        this.specs = []
+        this.suites = []
+        this.value = undefined
+    }
 
+    addSpec(spec) {
+        console.log({ spec })
+        const suite = this.suites.find(suite => suite.value?.id == spec.parentSuiteId)
+        if (suite) {
+            suite.specs.push(spec)
+        } else {
+            this.specs.push(spec)
+        }
+    }
+    addSuite(suite) {
+        const result = new SpecResult()
+        result.value = suite
+        const parentSuite = this.suites.find(tmp => tmp.value?.id == suite.parentSuiteId)
+        if (parentSuite) {
+            parentSuite.suites.push(result)
+        }
+        this.suites.push(result)
+    }
 }
 
 
@@ -8,55 +31,43 @@ export class TestReporter {
         this.report = report
         this.results = {}
     }
-    jasmineStarted  (suiteInfo) {
-        console.log('Running suite with ' + suiteInfo.totalSpecsDefined);
+    jasmineStarted(suiteInfo) {
+        // console.log('Running suite with ' + suiteInfo.totalSpecsDefined);
+        this.sepcResult = new SpecResult()
+
     }
 
-    suiteStarted  (result)  {
-        console.log('Suite started: ' + result.description
-            + ' whose full description is: ' + result.fullName);
-            this.results[result.id] = {suite: result, specs: []}
-            console.log({result})
+    suiteStarted(result) {
+        // console.log('Suite started: ' + result.description
+        //     + ' whose full description is: ' + result.fullName);
+        this.results[result.id] = { suite: result, specs: [] }
+        this.sepcResult.addSuite(result)
+
     }
 
-    async specStarted  (result) {
+    async specStarted(result) {
         // await somethingAsync();
         // console.log('Spec started: ' + result.description
         //     + ' whose full description is: ' + result.fullName);
     }
 
-    specDone  (result) {
-        console.log('Spec: ' + result.description + ' was ' + result.status);
-
-        for (const expectation of result.failedExpectations) {
-            console.log('Failure: ' + expectation.message);
-            console.log(expectation.stack);
-        }
-
-        this.results[result.parentSuiteId].specs.push(result)
-        console.log(result.passedExpectations.length);
+    specDone(result) {
+        // console.log('Spec: ' + result.description + ' was ' + result.status);
+        this.sepcResult.addSpec(result)
     }
 
     suiteDone(result) {
-        console.log('Suite: ' + result.description + ' was ' + result.status);
-        for (const expectation of result.failedExpectations) {
-            console.log('Suite ' + expectation.message);
-            console.log(expectation.stack);
-        }
-
+        // console.log('Suite: ' + result.description + ' was ' + result.status);
     }
 
-    jasmineDone (result) {
-        console.log('Finished suite: ' + result.overallStatus);
-        for (const expectation of result.failedExpectations) {
-            console.log('Global ' + expectation.message);
-            console.log(expectation.stack);
-        }
-        this.report({result: this.results})
+    jasmineDone(result) {
+        // console.log('Finished suite: ' + result.overallStatus);
+        console.log(this.sepcResult)
+        this.report({ result: {specs: this.sepcResult.specs, suites: this.sepcResult.suites.filter(tmp => tmp.value?.parentSuiteId == null) }})
     }
 
-    setError(error){
-        this.report({error: error})
+    setError(error) {
+        this.report({ error: error })
     }
 
 }

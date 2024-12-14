@@ -23,10 +23,10 @@ function SpecCard({ spec, indent }) {
                 <Card>
                     <CardContent>
                         {spec.failedExpectations.map(datum=>{
-                            return datum.message
+                            return <div>{datum.message}</div>
                         })}
                         {spec.passedExpectations.map(datum=>{
-                            return datum.matcherName
+                            return <div>{datum.matcherName}</div>
                         })}
                     </CardContent>
 
@@ -43,7 +43,7 @@ function SuiteBox({ suite, indent }) {
     return <>
         <ListItemButton onClick={handleClick} >
             {open ? <ExpandLess /> : <ExpandMore />}
-            <ListItemText primary={suite.suite.description} />
+            <ListItemText primary={suite.value.description} />
         </ListItemButton>
 
         <Collapse in={open} timeout="auto" unmountOnExit sx={{paddingLeft: indent*indentSize}}>
@@ -51,13 +51,16 @@ function SuiteBox({ suite, indent }) {
                 {suite.specs.map(spec => {
                     return <SpecCard spec={spec} indent={indent+1}></SpecCard>
                 })}
-
+                {suite.suites.map(child => {
+                    return <SuiteBox suite={child} indent={indent+1}></SuiteBox>
+                })}
             </List>
         </Collapse>
     </>
 }
 
 export function TestReport({data}) {
+    console.log(data)
     
     return (
         <>
@@ -68,10 +71,11 @@ export function TestReport({data}) {
         }
         {data?.result &&
             <List sx={{ width: '100%', bgcolor: 'background.paper' }} >
-
-                {Object.keys(data.result).map((key) => {
-                    const result = data.result[key]
-                    return <SuiteBox suite={result} indent={1} />
+                {data.result.specs.map(spec => {
+                    return <SpecCard spec={spec} indent={1}></SpecCard>
+                })}
+                {data.result.suites.map((suite) => {
+                    return <SuiteBox suite={suite} indent={1} />
                 })}
             </List>
         }
