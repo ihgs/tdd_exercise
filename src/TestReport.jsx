@@ -23,10 +23,10 @@ function SpecCard({ spec, indent }) {
                 <Card>
                     <CardContent>
                         {spec.failedExpectations.map(datum=>{
-                            return <div>{datum.message}</div>
+                            return <div key={Date.now()}>{datum.message}</div>
                         })}
                         {spec.passedExpectations.map(datum=>{
-                            return <div>{datum.matcherName}</div>
+                            return <div key={Date.now()}>{datum.matcherName}</div>
                         })}
                     </CardContent>
 
@@ -49,33 +49,31 @@ function SuiteBox({ suite, indent }) {
         <Collapse in={open} timeout="auto" unmountOnExit sx={{paddingLeft: indent*indentSize}}>
             <List component="div" disablePadding>
                 {suite.specs.map(spec => {
-                    return <SpecCard spec={spec} indent={indent+1}></SpecCard>
+                    return <SpecCard key={spec.id} spec={spec} indent={indent+1}></SpecCard>
                 })}
                 {suite.suites.map(child => {
-                    return <SuiteBox suite={child} indent={indent+1}></SuiteBox>
+                    return <SuiteBox key={suite.id} suite={child} indent={indent+1}></SuiteBox>
                 })}
             </List>
         </Collapse>
     </>
 }
 
-export function TestReport({data}) {
-    console.log(data)
-    
+export function TestReport({data}) {    
     return (
         <>
         {data?.error &&
-            <div style={{color:"red"}}>
+            <div  style={{color:"red"}}>
                 {data.error.message}
             </div>
         }
         {data?.result &&
-            <List sx={{ width: '100%', bgcolor: 'background.paper' }} >
+            <List key={Date.now()} sx={{ width: '100%', bgcolor: 'background.paper' }} >
                 {data.result.specs.map(spec => {
-                    return <SpecCard spec={spec} indent={1}></SpecCard>
+                    return <SpecCard key={spec.id} spec={spec} indent={1}></SpecCard>
                 })}
                 {data.result.suites.map((suite) => {
-                    return <SuiteBox suite={suite} indent={1} />
+                    return <SuiteBox key={suite.id} suite={suite} indent={1} />
                 })}
             </List>
         }
