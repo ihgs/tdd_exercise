@@ -3,7 +3,7 @@ import { Stack, Tooltip } from '@mui/material';
 
 const hhmmss = (time)=>{
     const d = new Date(time)
-    return [ d.getHours(), d.getHours(), d.getSeconds()].map(item=>{
+    return [ d.getHours(), d.getMinutes(), d.getSeconds()].map(item=>{
         return ('00' + item ).slice(-2)
     }).join(":")
 }
