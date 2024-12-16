@@ -20,11 +20,11 @@ export async function runJasmine(data, report) {
 
     const reporter = new TestReporter(report);
     jasmineEnv.updateInterval = 250;
-    // jasmineEnv.randomizeTests(false);
+    jasmineEnv.configure({random:false})
     jasmineEnv.addReporter(reporter);
     try{
         eval(data)
-        const result = await jasmineEnv.execute();
+        return await jasmineEnv.execute();
     }catch(e){
         reporter.setError(e)
     }

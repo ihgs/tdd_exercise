@@ -6,6 +6,7 @@ import { Button, Stack } from "@mui/material";
 import { useTest } from "./useTest";
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
+import { TestHistory } from "./testframework/TestHistory";
 
 const defaultCode = `
 function fizzbuzz(num) {
@@ -29,12 +30,15 @@ describe("FizzBuzz", function(){
 })
 `
 
+const HISTORY_SIZE = 9
+
 export function Editor() {
     const [code, setCode] = useState(defaultCode);
     const [testCode, setTestCode] = useState(defaultTest);
     const [editorStatus, setEditorStatus] = useState("half")
     const [size, setSize] = useState([0, 0]);
     const { data, report } = useTest();
+    const [history, setHistory] = useState([])
 
     const options = {
         automaticLayout: true,
@@ -64,8 +68,13 @@ export function Editor() {
 
 
     const runTest = async () => {
-        // console.log("runTest")
-        runJasmine(code + '\n' + testCode, report)
+        const result = await runJasmine(code + '\n' + testCode, report)
+        const datum = {
+            status: result.overallStatus,
+            time: Date.now()
+        }
+        setHistory([datum, ...history.slice(0,HISTORY_SIZE)])
+        // setHistory([...history, datum])
     }
 
     return (
@@ -114,6 +123,7 @@ export function Editor() {
                     </Stack>
                 </Stack>
                 <Stack sx={{ marginLeft: 2}}>
+                    <TestHistory history={history} />
                     <div>
                         <Button onClick={runTest} variant="contained" >Run & Test</Button>
 
