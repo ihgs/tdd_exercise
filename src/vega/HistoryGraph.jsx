@@ -21,7 +21,6 @@ const spec = {
       } ,
       "color": {"condition": {"test": "datum['status'] == 'passed'", "value": "green"}, "value": "red"}
   },
-  "width": 70,
   "config": {
     "legend": {"disable": true}
 
@@ -36,6 +35,6 @@ const spec = {
 }
 
 
-  export function HistoryGraph({data, height}){
-    return <VegaLite  data={{"table": data}} spec={spec} actions={false} height={height}/>
+  export function HistoryGraph({data, width, height}){
+    return <VegaLite  data={{"table": data}} spec={spec} actions={false} width={width} height={height}/>
   }

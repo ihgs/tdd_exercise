@@ -35,7 +35,8 @@ const defaultTodo = `- TODO
 `
 
 const HISTORY_SIZE = 9
-
+const CODE_WIDTH = 800
+const HISTORY_BAR_WIDTH = 60
 export function Editor() {
     const [code, setCode] = useState(defaultCode);
     const [testCode, setTestCode] = useState(defaultTest);
@@ -66,7 +67,7 @@ export function Editor() {
                     break;
             }
 
-            setLeftWidth(window.innerWidth - 860)
+            setLeftWidth(window.innerWidth - CODE_WIDTH - HISTORY_BAR_WIDTH)
         }
         window.addEventListener('resize', updateSize)
         updateSize()
@@ -91,14 +92,14 @@ export function Editor() {
             <Stack direction="row" style={{ textAlign: "left" }}>
 
                 <Stack>
-                    <HistoryGraph data={allHistory} height={window.innerHeight - 30} ></HistoryGraph>
+                    <HistoryGraph data={allHistory} width={HISTORY_BAR_WIDTH} height={window.innerHeight - 30} ></HistoryGraph>
                 </Stack>
 
 
                 <Stack sx={{ marginLeft: 2}} width={leftWidth - 70} height={window.innerHeight} style={{ overflowX: "auto"}}>
                     
                     <MonacoEditor
-                            width={`${leftWidth - 90}`} 
+                            width={`${leftWidth - HISTORY_BAR_WIDTH - 20}`} 
                             height={window.innerHeight/2}
                             language="markdown"
                             theme="vs-dark"
@@ -131,7 +132,7 @@ export function Editor() {
 
                         </div>
                         <MonacoEditor
-                            width="800"
+                            width={CODE_WIDTH}
                             height={size[0]}
                             language="javascript"
                             theme="vs-dark"
@@ -152,7 +153,7 @@ export function Editor() {
 
                         </div>
                         <MonacoEditor
-                            width="800"
+                            width={CODE_WIDTH}
                             height={size[1]}
                             language="javascript"
                             theme="vs-dark"
