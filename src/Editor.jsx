@@ -7,6 +7,7 @@ import { useTest } from "./useTest";
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
 import { TestHistory } from "./testframework/TestHistory";
+import { HistoryGraph } from "./vega/HistoryGraph";
 
 const defaultCode = `
 function fizzbuzz(num) {
@@ -39,6 +40,7 @@ export function Editor() {
     const [size, setSize] = useState([0, 0]);
     const { data, report } = useTest();
     const [history, setHistory] = useState([])
+    const [allHistory, setAllHistory] = useState([])
 
     const options = {
         automaticLayout: true,
@@ -73,6 +75,7 @@ export function Editor() {
             status: result.overallStatus,
             time: Date.now()
         }
+        setAllHistory([datum, ...allHistory])
         setHistory([datum, ...history.slice(0,HISTORY_SIZE)])
         // setHistory([...history, datum])
     }
@@ -130,6 +133,9 @@ export function Editor() {
                     </div>
 
                     <TestReport data={data} report={report} />
+                </Stack>
+                <Stack>
+                    <HistoryGraph data={allHistory} ></HistoryGraph>
                 </Stack>
             </Stack>
 
