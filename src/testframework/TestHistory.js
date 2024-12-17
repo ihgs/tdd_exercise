@@ -9,7 +9,7 @@ const hhmmss = (time)=>{
 }
 export function TestHistory({history}){
 
-    console.log({history})
+    // console.debug({history})
     return <>
         <Stack direction={"row"} sx={{height:30}}>
             {   

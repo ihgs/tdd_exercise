@@ -6,7 +6,7 @@ export class SpecResult {
     }
 
     addSpec(spec) {
-        console.log({ spec })
+        console.debug({ spec })
         const suite = this.suites.find(suite => suite.value?.id == spec.parentSuiteId)
         if (suite) {
             suite.specs.push(spec)
@@ -46,6 +46,7 @@ export class TestReporter {
     }
 
     async specStarted(result) {
+        console.log('Spec started: '+ result.fullName)
         // await somethingAsync();
         // console.log('Spec started: ' + result.description
         //     + ' whose full description is: ' + result.fullName);
@@ -62,7 +63,7 @@ export class TestReporter {
 
     jasmineDone(result) {
         // console.log('Finished suite: ' + result.overallStatus);
-        console.log(this.sepcResult)
+        console.debug(this.sepcResult)
         this.report({ result: {specs: this.sepcResult.specs, suites: this.sepcResult.suites.filter(tmp => tmp.value?.parentSuiteId == null) }})
     }
 
