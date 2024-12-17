@@ -1,5 +1,5 @@
 import { List, ListItem, ListItemText, ListItemButton, Collapse, Card, CardHeader, CardContent } from "@mui/material"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
@@ -14,14 +14,14 @@ function SpecCard({ spec, indent }) {
         <>
             <ListItemButton onClick={handleClick} sx={{  color: spec.status=="passed" ? "blue" : "red"}} >
                 {open ? <ExpandLess /> : <ExpandMore />}
-                <ListItem>
+                <ListItem style={{padding:0}}>
                 {spec.description} {spec.status}
                 </ListItem>
             </ListItemButton>
 
             <Collapse in={open} timeout="auto" unmountOnExit sx={{paddingLeft: indent*indentSize}}>
                 <Card>
-                    <CardContent>
+                    <CardContent style={{padding: 5}}>
                         {spec.failedExpectations.map(datum=>{
                             return <div key={Date.now()}>{datum.message}</div>
                         })}
@@ -36,12 +36,15 @@ function SpecCard({ spec, indent }) {
     )
 }
 function SuiteBox({ suite, indent }) {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const handleClick = () => {
         setOpen(!open);
     }
+    useEffect(()=>{
+        setOpen(suite.failed())
+    },[])
     return <>
-        <ListItemButton onClick={handleClick} >
+        <ListItemButton onClick={handleClick} style={{paddingTop:0, paddingBottom:0}}>
             {open ? <ExpandLess /> : <ExpandMore />}
             <ListItemText primary={suite.value.description} />
         </ListItemButton>
@@ -59,7 +62,7 @@ function SuiteBox({ suite, indent }) {
     </>
 }
 
-export function TestReport({data}) {    
+export function TestReport({data}) {
     return (
         <>
         {data?.error &&

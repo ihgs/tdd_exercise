@@ -3,14 +3,21 @@ export class SpecResult {
         this.specs = []
         this.suites = []
         this.value = undefined
+        this.hasFail = false
     }
 
     addSpec(spec) {
         console.debug({ spec })
         const suite = this.suites.find(suite => suite.value?.id == spec.parentSuiteId)
         if (suite) {
+            if(spec.status=="failed"){
+                suite.hasFail = true
+            }
             suite.specs.push(spec)
         } else {
+            if(spec.status=="failed"){
+                this.hasFail = true
+            }
             this.specs.push(spec)
         }
     }
@@ -22,6 +29,18 @@ export class SpecResult {
             parentSuite.suites.push(result)
         }
         this.suites.push(result)
+    }
+
+    failed(){
+        if (this.hasFail){
+            return true
+        }
+        for (let i=0;i<this.suites.length;i++){
+            if(this.suites[i].failed()){
+                return true
+            }
+        }
+        return false
     }
 }
 
