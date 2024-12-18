@@ -19,7 +19,14 @@ const spec = {
           "domainOpacity": 0
         },
       } ,
-      "color": {"condition": {"test": "datum['status'] == 'passed'", "value": "green"}, "value": "red"}
+      "color": {
+        "field": "status",
+        "scale": {
+          "type": "nominal",
+          "domain": ["passed","failed", "error"],
+          "range": ["green", "red", "#FFC800"]
+        }
+      }
   },
   "config": {
     "legend": {"disable": true}

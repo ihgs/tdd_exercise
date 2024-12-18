@@ -5,7 +5,7 @@ export function useTest(){
 
     const report = ({result, error}) => {
         
-        setData({result, error});
+        setData({result, error, executedAt: Date.now()});
         
     }
 

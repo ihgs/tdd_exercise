@@ -1,5 +1,5 @@
 import { List, ListItem, ListItemText, ListItemButton, Collapse, Card, CardHeader, CardContent } from "@mui/material"
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
@@ -35,7 +35,7 @@ function SpecCard({ spec, indent }) {
         </>
     )
 }
-function SuiteBox({ suite, indent }) {
+const SuiteBox = memo(({ suite, indent }) =>{
     const [open, setOpen] = useState(false);
     const handleClick = () => {
         setOpen(!open);
@@ -60,7 +60,7 @@ function SuiteBox({ suite, indent }) {
             </List>
         </Collapse>
     </>
-}
+})
 
 export function TestReport({data}) {
     return (
@@ -71,7 +71,7 @@ export function TestReport({data}) {
             </div>
         }
         {data?.result &&
-            <List key={Date.now()} sx={{ width: '100%', bgcolor: 'background.paper' }} >
+            <List key={data.executedAt} sx={{ width: '100%', bgcolor: 'background.paper' }} >
                 {data.result.specs.map(spec => {
                     return <SpecCard key={spec.id} spec={spec} indent={1}></SpecCard>
                 })}

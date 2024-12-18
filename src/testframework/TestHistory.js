@@ -7,14 +7,20 @@ const hhmmss = (time)=>{
         return ('00' + item ).slice(-2)
     }).join(":")
 }
+
+const colorMap = {
+    "passed": "green",
+    "failed": "red",
+    "error": "#FFC800"
+}
 export function TestHistory({history}){
 
-    // console.debug({history})
+    console.debug({history})
     return <>
         <Stack direction={"row"} sx={{height:30}}>
             {   
                 history.map((data)=>{
-                    const color = data.status === "passed" ? "green" : "red"
+                    const color = colorMap[data.status]
                     return (
                         <Tooltip title={hhmmss(data.time)}>
                             <CircleIcon key={data.time} sx={{color: color}} />

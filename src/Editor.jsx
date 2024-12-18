@@ -1,12 +1,12 @@
 import MonacoEditor from "react-monaco-editor"
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState, memo } from "react"
 import { runJasmine } from "./testframework/TestManager";
 import { TestReport } from "./TestReport";
 import { Box, Button, Paper, Stack } from "@mui/material";
 import { useTest } from "./useTest";
 import ExpandLessRoundedIcon from '@mui/icons-material/ExpandLessRounded';
 import ExpandMoreRoundedIcon from '@mui/icons-material/ExpandMoreRounded';
-import { TestHistory } from "./testframework/TestHistory";
+import { TestHistory as _TestHistory} from "./testframework/TestHistory";
 import { HistoryGraph } from "./vega/HistoryGraph";
 
 const defaultCode = `
@@ -37,6 +37,11 @@ const defaultTodo = `- TODO
 const HISTORY_SIZE = 9
 const CODE_WIDTH = 800
 const HISTORY_BAR_WIDTH = 60
+
+const TestHistory = memo(({history})=>{
+    return <_TestHistory history={history} />
+})
+
 export function Editor() {
     const [code, setCode] = useState(defaultCode);
     const [testCode, setTestCode] = useState(defaultTest);
@@ -79,7 +84,7 @@ export function Editor() {
     const runTest = async () => {
         const result = await runJasmine(code + '\n' + testCode, report)
         const datum = {
-            status: result.overallStatus,
+            status: result?.overallStatus || "error",
             time: Date.now()
         }
         setAllHistory([datum, ...allHistory])
@@ -114,7 +119,7 @@ export function Editor() {
 
                     </div>
                     <div style={{overflowY:"auto", overflowX: "auto"}}>
-                    <TestReport data={data} report={report} />
+                    <TestReport data={data}/>
                     </div>
                     
                 
