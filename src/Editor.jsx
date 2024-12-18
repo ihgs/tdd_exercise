@@ -62,13 +62,13 @@ export function Editor() {
         const updateSize = () => {
             switch (editorStatus) {
                 case "half":
-                    setSize([(window.innerHeight - 40) / 2, (window.innerHeight - 40) / 2])
+                    setSize([(window.innerHeight - 50) / 2, (window.innerHeight - 50) / 2])
                     break;
                 case "fullCode":
-                    setSize([(window.innerHeight - 80), 20])
+                    setSize([(window.innerHeight - 100), 20])
                     break;
                 case "hiddenCode":
-                    setSize([20, (window.innerHeight - 80)])
+                    setSize([20, (window.innerHeight - 100)])
                     break;
             }
 
@@ -97,11 +97,11 @@ export function Editor() {
             <Stack direction="row" style={{ textAlign: "left" }}>
 
                 <Stack>
-                    <HistoryGraph data={allHistory} width={HISTORY_BAR_WIDTH} height={window.innerHeight - 30} ></HistoryGraph>
+                    <HistoryGraph data={allHistory} width={HISTORY_BAR_WIDTH} height={window.innerHeight - 50} ></HistoryGraph>
                 </Stack>
 
 
-                <Stack sx={{ marginLeft: 2}} width={leftWidth - 70} height={window.innerHeight} style={{ overflowX: "auto"}}>
+                <Stack sx={{ marginLeft: 2}} width={leftWidth - HISTORY_BAR_WIDTH -10} height={window.innerHeight} style={{ overflowX: "auto"}}>
                     
                     <MonacoEditor
                             width={`${leftWidth - HISTORY_BAR_WIDTH - 20}`} 

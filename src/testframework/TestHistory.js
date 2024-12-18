@@ -14,8 +14,6 @@ const colorMap = {
     "error": "#FFC800"
 }
 export function TestHistory({history}){
-
-    console.debug({history})
     return <>
         <Stack direction={"row"} sx={{height:30}}>
             {   
