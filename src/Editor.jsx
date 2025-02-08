@@ -55,7 +55,8 @@ export function Editor() {
 
     const options = {
         automaticLayout: true,
-        inlineSuggest: { enabled: true }
+        inlineSuggest: { enabled: true },
+        minimap: {enabled:false}
     };
 
     useLayoutEffect(() => {
@@ -111,6 +112,7 @@ export function Editor() {
                             value={todo}
                             options={{minimap: {enabled: false}, wordWrap: {enabled: true} }}
                             onChange={setTodo}
+                            minimap={false}
                         />
 
                     <TestHistory history={history} />
